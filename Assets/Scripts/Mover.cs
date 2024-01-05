@@ -4,19 +4,15 @@ public class Mover : MonoBehaviour
 {
     [SerializeField] private float _speed = 1;
 
-    private void Start()
-    {
-        SetRotation();
-    }
+    private Vector3 _direction = Vector3.forward;
 
     private void Update()
     {
-        transform.Translate(Vector3.forward * _speed * Time.deltaTime, Space.Self);
+        transform.Translate(_direction * _speed * Time.deltaTime, Space.Self);
     }
 
-    private void SetRotation()
+    public void SetDirection(int rotationAngle)
     {
-        int rotationY = Random.Range(0, 360);
-        transform.rotation = Quaternion.Euler(0, rotationY, 0);
+        transform.rotation = Quaternion.Euler(0, rotationAngle, 0);
     }
 }

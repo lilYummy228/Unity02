@@ -262,9 +262,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa1602f5ce7a2247b0b0b7d7ec71818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnedObject: {fileID: 3136820629370392942, guid: 62dcba975a0bdfe47bef48ea43049412, type: 3}
-  _minOffset: -6
-  _maxOffset: 6
+  _mover: {fileID: 5205907946020607129, guid: 62dcba975a0bdfe47bef48ea43049412, type: 3}
+  _rotationAngle: 111
 --- !u!23 &600010651
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -342,7 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf4e1066fe14bd145b88e6e7a83f28fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 1
+  _spinSpeed: 1
 --- !u!1 &1688025829
 GameObject:
   m_ObjectHideFlags: 1
