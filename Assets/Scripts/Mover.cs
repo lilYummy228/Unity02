@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
-    [SerializeField] private float _speed = 1;
-
-    private Vector3 _direction = Vector3.forward;
+    [SerializeField] private float _speed = 0.2f;
+    [SerializeField] private Transform _target;
 
     private void Update()
     {
-        transform.Translate(_direction * _speed * Time.deltaTime, Space.Self);
+        transform.LookAt(_target);
+        transform.position = Vector3.Lerp(transform.position, _target.position, _speed * Time.deltaTime);
     }
 
-    public void SetDirection(int rotationAngle)
+    public void SetDirection(Transform target)
     {
-        transform.rotation = Quaternion.Euler(0, rotationAngle, 0);
+        _target = target;        
     }
 }

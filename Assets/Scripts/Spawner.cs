@@ -4,11 +4,11 @@ using System.Collections;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private Mover _mover;
-    [SerializeField, Range(0, 360)] private int _rotationAngle = 180;
+    [SerializeField] private Transform _target;
 
     private float _minOffset = -6;
     private float _maxOffset = 6;
-    private int _enemyCount = 20;
+    private int _enemyCount = 3;
     private float _delay = 2;
 
     private void Start()
@@ -32,7 +32,7 @@ public class Spawner : MonoBehaviour
         Vector3 spawnOffset = SetSpawnPoint();
 
         _mover.transform.position = transform.position - spawnOffset;
-        _mover.SetDirection(_rotationAngle);
+        _mover.SetDirection(_target);
 
         Instantiate(_mover);
     }
