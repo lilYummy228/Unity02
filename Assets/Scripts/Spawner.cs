@@ -32,9 +32,9 @@ public class Spawner : MonoBehaviour
         Vector3 spawnOffset = SetSpawnPoint();
 
         _mover.transform.position = transform.position - spawnOffset;
-        _mover.SetDirection(_target);
+        Mover mover = Instantiate(_mover);
 
-        Instantiate(_mover);
+        mover.SetDirection(_target);
     }
 
     private Vector3 SetSpawnPoint()
