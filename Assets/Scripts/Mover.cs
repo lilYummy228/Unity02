@@ -1,18 +1,31 @@
 using UnityEngine;
 
-public class Mover : MonoBehaviour
+public class Movement : MonoBehaviour
 {
-    [SerializeField] private float _speed = 0.2f;
-    [SerializeField] private Transform _target;
+    private const string Horizontal = nameof(Horizontal);
+    private const string Vertical = nameof(Vertical);
+
+    [SerializeField] private float _rotationSpeed;
+    [SerializeField] private float _movementSpeed;
 
     private void Update()
     {
-        transform.LookAt(_target);
-        transform.position = Vector3.Lerp(transform.position, _target.position, _speed * Time.deltaTime);
+        Rotate();
+        Move();
     }
 
-    public void SetDirection(Transform target)
+    private void Rotate()
     {
-        _target = target;        
+        float rotation = Input.GetAxis(Horizontal);
+
+        transform.Rotate(rotation * Vector3.up * _rotationSpeed * Time.deltaTime);
+    }
+
+    private void Move()
+    {
+        float direction = Input.GetAxis(Vertical);
+        float distance = _movementSpeed * Time.deltaTime * direction;
+
+        transform.Translate(distance * Vector3.forward);
     }
 }
