@@ -3,40 +3,14 @@ using UnityEngine;
 
 public class AlertSystem : MonoBehaviour
 {
-    [SerializeField] private AudioSource _alert;
+    [SerializeField] private AudioSource _alert;   
 
-    private bool _isEntered = false;
-
-    private void OnTriggerEnter(Collider other)
-    {
-        StopCoroutine(FadeSound());
-
-        if (other.GetComponent<Rogue>())
-        {
-            _isEntered = true;
-
-            StartCoroutine(FadeSound());
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        StopCoroutine(FadeSound());
-
-        if (other.GetComponent<Rogue>())
-        {
-            _isEntered = false;
-
-            StartCoroutine(FadeSound());
-        }
-    }
-
-    private IEnumerator FadeSound()
+    public IEnumerator FadeSound(bool isEntered)
     {
         float timeToFade = 1.25f;
         float timeElapsed = 0;
 
-        if (_isEntered)
+        if (isEntered)
         {
             _alert.Play();
 
