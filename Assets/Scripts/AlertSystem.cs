@@ -1,36 +1,69 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
 public class AlertSystem : MonoBehaviour
 {
-    [SerializeField] private AudioSource _alert;   
+    private const int MinVolume = 0;
+    private const int MaxVolume = 1;
 
-    public IEnumerator FadeSound(bool isEntered)
+    [SerializeField] private AudioSource _alert;
+    [SerializeField] private BoxCollider _alertZone;
+
+    private bool _isEntered = false;
+    private IEnumerator _fadeSound;
+
+    private void OnTriggerEnter(Collider other)
     {
-        float timeToFade = 1.25f;
-        float timeElapsed = 0;
+        _isEntered = true;
 
-        if (isEntered)
+        ReplayCoroutine(other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        _isEntered = false;
+
+        ReplayCoroutine(other);
+    }
+
+    private IEnumerator FadeSound()
+    {
+        if (_isEntered)
         {
             _alert.Play();
 
-            while (timeElapsed < timeToFade)
-            {
-                _alert.volume = Mathf.MoveTowards(0, 1, timeElapsed / timeToFade);
-                timeElapsed += Time.deltaTime;
-                yield return null;
-            }
+            yield return FadeSound(MinVolume, MaxVolume);            
         }
         else
         {
-            while (timeElapsed < timeToFade)
-            {
-                _alert.volume = Mathf.MoveTowards(1, 0, timeElapsed / timeToFade);
-                timeElapsed += Time.deltaTime;
-                yield return null;
-            }
+            yield return FadeSound(MaxVolume, MinVolume);
 
             _alert.Stop();
         }
+    }
+
+    private IEnumerator FadeSound(int initialVolume, int finalVolume)
+    {
+        float timeToFade = 1.5f;
+        float timeElapsed = 0;
+
+        while (timeElapsed < timeToFade)
+        {
+            _alert.volume = Mathf.MoveTowards(initialVolume, finalVolume, timeElapsed / timeToFade);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    private void ReplayCoroutine(Collider other)
+    {
+        if (_fadeSound != null)
+            StopCoroutine(_fadeSound);
+
+        _fadeSound = FadeSound();
+
+        if (other.GetComponent<Rogue>())
+            StartCoroutine(_fadeSound);
     }
 }
