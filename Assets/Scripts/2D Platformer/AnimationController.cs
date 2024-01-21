@@ -1,16 +1,17 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class AnimationController : MonoBehaviour
 {
-    private Animator _animator;
+    public Animator Animator;
 
-    public void Animate(string triggerName, bool isMoving)
+    public void Animate(int parameter, float speed)
     {
-        _animator.SetBool(triggerName, isMoving);
+        Animator.SetFloat(parameter, speed);
     }
 
     private void Start()
     {
-        _animator = GetComponent<Animator>();
+        Animator = GetComponent<Animator>();
     }
 }

@@ -7,17 +7,19 @@ public class Mover : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidbody;
 
-    public bool Move(float moveDirection)
+    public float Move(float moveDirection)
     {
         _rigidbody.velocity = new Vector2(moveDirection * _moveSpeed, _rigidbody.velocity.y);
 
         if (moveDirection != 0)
         {
             FlipToSight(moveDirection);
-            return true;
+
+            if (moveDirection < 0)
+                moveDirection = -moveDirection;
         }
 
-        return false;
+        return moveDirection;
     }
 
     private void Start()

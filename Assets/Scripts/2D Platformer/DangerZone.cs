@@ -6,7 +6,7 @@ public class DangerZone : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Player>())
+        if (collision.TryGetComponent(out Player player))
         {
             _spawnPoint.Teleport(collision.gameObject);
         }

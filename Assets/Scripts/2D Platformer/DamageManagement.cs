@@ -16,7 +16,7 @@ public class DamageManagement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.GetComponent<Enemy>())
+        if (collision.collider.TryGetComponent(out Enemy enemy))
         {
             _spriteRenderer.material = _blinkMaterial;
 
