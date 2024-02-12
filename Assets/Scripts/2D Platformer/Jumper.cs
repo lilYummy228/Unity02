@@ -6,19 +6,23 @@ public class Jumper : MonoBehaviour
     [SerializeField] private Transform _groundChecker;
     [SerializeField] private float _jumpForce;
 
-    private Rigidbody2D _rigidbody;
-    private float _checkRadius = 0.5f;
+    public Rigidbody2D Rigidbody { get; private set; }
 
-    public void Jump(bool isJump)
-    {
-        if (IsGrounded())
-            if (isJump)
-                _rigidbody.velocity = Vector2.up * _jumpForce;
-    }
+    private float _checkRadius = 0.5f;
 
     private void Start()
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
+        if (gameObject.TryGetComponent(out Rigidbody2D rigidbody))
+            Rigidbody = rigidbody;
+    }
+
+    public bool Jump(bool isJump)
+    {
+        if (IsGrounded())
+            if (isJump)
+                Rigidbody.velocity = Vector2.up * _jumpForce;
+
+        return IsGrounded();
     }
 
     private bool IsGrounded()

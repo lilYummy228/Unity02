@@ -1,18 +1,76 @@
+using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Mover))]
+[RequireComponent(typeof(AnimationController))]
+[RequireComponent(typeof(EnemyDetector))]
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private Mover _mover;
+    private readonly int VelocityX = Animator.StringToHash(nameof(VelocityX));
 
-    private float _moveDirection = 1;
+    public DamageController DamageController { get; private set; }
 
-    public void GetDirection()
+    private EnemyDetector _playerDetector;
+    private Attacker _attacker;
+    private WaitForSeconds _wait;
+    private WaitForSecondsRealtime _stun;
+    private Mover _mover;
+    private AnimationController _animationController;
+    private float _moveDirection = 1f;
+    private float _waitingTime = 2f;
+    private float _stunningTime = 0.4f;
+
+    private void Start()
     {
-        _moveDirection = -_moveDirection;
-    }
+        _wait = new WaitForSeconds(_waitingTime);
+        _stun = new WaitForSecondsRealtime(_stunningTime);
+        DamageController = GetComponent<DamageController>();
+        _attacker= GetComponent<Attacker>();
+        _mover = GetComponent<Mover>();
+        _animationController = GetComponent<AnimationController>();
+        _playerDetector = GetComponent<EnemyDetector>();
+    }    
 
     private void Update()
     {
-        _mover.Move(_moveDirection);
+        _animationController.SetVelocityX(VelocityX, _mover.Move(_moveDirection));
     }
+
+    public IEnumerator DetectPlayer()
+    {
+        if (_playerDetector.Player != null)
+        {
+            _moveDirection = -(transform.position.x - _playerDetector.Player.transform.position.x);
+
+            if (_moveDirection > 0)
+                _moveDirection = 1;
+            else
+                _moveDirection = -1;
+        }
+
+        yield return null;        
+    }     
+
+    public IEnumerator Stun()
+    {
+        if (DetectPlayer() != null)
+            StopCoroutine(DetectPlayer());
+
+        float moveDirection = _moveDirection;
+        _moveDirection = 0;
+
+        yield return _stun;
+
+        _moveDirection = moveDirection;
+    }
+
+    public IEnumerator ChangeMoveDirection()
+    {
+        float moveDirection = _moveDirection;
+        _moveDirection = 0f;
+
+        yield return _wait;
+
+        _moveDirection = -moveDirection;
+    }    
 }

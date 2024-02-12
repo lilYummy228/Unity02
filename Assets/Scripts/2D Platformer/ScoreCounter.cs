@@ -1,20 +1,21 @@
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(TMP_Text))]
 public class ScoreCounter : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _scoreCounter;
+    private TMP_Text _scoreCounter;
 
-    private int _scoreCount;
+    private int _scoreCount = 0;
+
+    private void Start()
+    {
+        _scoreCounter = GetComponent<TMP_Text>();
+    }
 
     public void AddScore()
     {
         _scoreCount++;
-    }
-       
-    private void Update()
-    {
         _scoreCounter.text = _scoreCount.ToString();
     }
-
 }

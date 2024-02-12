@@ -4,8 +4,13 @@ public class Mover : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
 
-    private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidbody;
+
+    private void Start()
+    {
+        if (gameObject.TryGetComponent(out Rigidbody2D rigidbody))
+            _rigidbody = rigidbody;
+    }
 
     public float Move(float moveDirection)
     {
@@ -22,17 +27,11 @@ public class Mover : MonoBehaviour
         return moveDirection;
     }
 
-    private void Start()
-    {
-        _rigidbody = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
     private void FlipToSight(float moveDirection)
     {
         if (moveDirection > 0)
-            _spriteRenderer.flipX = false;
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
         else if (moveDirection < 0)
-            _spriteRenderer.flipX = true;
+            transform.localRotation = Quaternion.Euler(0, 180, 0);
     }
 }
