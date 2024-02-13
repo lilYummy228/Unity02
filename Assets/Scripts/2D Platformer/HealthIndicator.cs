@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class DamageController : Health
+public class HealthIndicator : Health
 {
     private readonly int IsHurt = Animator.StringToHash(nameof(IsHurt));
     private readonly int IsDead = Animator.StringToHash(nameof(IsDead));
@@ -9,7 +9,7 @@ public class DamageController : Health
     [SerializeField] private Material _hurtBlinkMaterial;
     [SerializeField] private Material _healBlinkMaterial;
 
-    private AnimationController _animationController;
+    private AnimationPlayer _animationPlayer;
     private SpriteRenderer _spriteRenderer;
     private WaitForSeconds _wait;
     private Material _defaultMaterial;
@@ -18,8 +18,8 @@ public class DamageController : Health
 
     private void Start()
     {
-        if (gameObject.TryGetComponent(out AnimationController animationController))
-            _animationController = animationController;
+        if (gameObject.TryGetComponent(out AnimationPlayer animationPlayer))
+            _animationPlayer = animationPlayer;
 
         if (gameObject.TryGetComponent(out SpriteRenderer spriteRenderer))
             _spriteRenderer = spriteRenderer;
@@ -57,16 +57,16 @@ public class DamageController : Health
     {
         StartCoroutine(Blink(_hurtBlinkMaterial));
 
-        _animationController.SetHurtState(IsHurt, true);
+        _animationPlayer.SetHurtState(IsHurt, true);
 
         yield return _wait;
 
-        _animationController.SetHurtState(IsHurt, false);
+        _animationPlayer.SetHurtState(IsHurt, false);
     }
 
     private void Dead()
     {
-        _animationController.SetDeathState(IsDead, true);
+        _animationPlayer.SetDeathState(IsDead, true);
 
         if (gameObject.TryGetComponent(out Enemy enemy))
             enemy.enabled = false;

@@ -521,10 +521,10 @@ GameObject:
   - component: {fileID: 8845741596236464384}
   - component: {fileID: 581685509897270615}
   - component: {fileID: 5113389151627314697}
-  - component: {fileID: 7275941053075602967}
-  - component: {fileID: -8768480168277442114}
   - component: {fileID: 7024425423735816341}
   - component: {fileID: 1523168688386359923}
+  - component: {fileID: 5244976734612295219}
+  - component: {fileID: 2554428249221917441}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -541,7 +541,7 @@ Transform:
   m_GameObject: {fileID: 7781758770439810277}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.0567038, y: -3.0159883, z: 0}
+  m_LocalPosition: {x: -2.8558, y: -3.0705633, z: 0}
   m_LocalScale: {x: 1.84, y: 1.84, z: 1.84}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -709,33 +709,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 2
---- !u!114 &7275941053075602967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7781758770439810277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6746818b1c4091438de61c0ea13965c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HealthValue: 60
-  _hurtBlinkMaterial: {fileID: 2100000, guid: 57f383d93da31f24d89cb93095a22613, type: 2}
-  _healBlinkMaterial: {fileID: 2100000, guid: 41d225f255dce9d498b3dd00a2a4e809, type: 2}
---- !u!114 &-8768480168277442114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7781758770439810277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c83f08133f4b78c4c8f672d6bdba7a87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7024425423735816341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,6 +740,33 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _damage: 20
+--- !u!114 &5244976734612295219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7781758770439810277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0f9d62d5aad88a4facec7128baafdd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2554428249221917441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7781758770439810277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff088fc075abecf4389d16816250b8c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthValue: 60
+  _hurtBlinkMaterial: {fileID: 2100000, guid: 57f383d93da31f24d89cb93095a22613, type: 2}
+  _healBlinkMaterial: {fileID: 2100000, guid: 41d225f255dce9d498b3dd00a2a4e809, type: 2}
 --- !u!1 &8845919934955009870
 GameObject:
   m_ObjectHideFlags: 0

@@ -57,7 +57,7 @@ public class Attacker : MonoBehaviour
 
         foreach (Collider2D collider in hitEnemies)
         {
-            if (collider.TryGetComponent(out DamageController damageController))
+            if (collider.TryGetComponent(out HealthIndicator damageController))
             {
                 damageController.TakeDamage(_damage);
 
@@ -69,13 +69,13 @@ public class Attacker : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (gameObject.TryGetComponent(out DamageController health) && collision.collider.TryGetComponent(out Player player))
+        if (gameObject.TryGetComponent(out HealthIndicator health) && collision.collider.TryGetComponent(out Player player))
             _hitCoroutine = StartCoroutine(Hit(player));
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.collider.TryGetComponent(out Player player) && _hitCoroutine != null && gameObject.TryGetComponent(out AnimationController animationController))
+        if (collision.collider.TryGetComponent(out Player player) && _hitCoroutine != null && gameObject.TryGetComponent(out AnimationPlayer animationController))
         {
             StopCoroutine(_hitCoroutine);
             animationController.SetAttackState(IsAttacked, false);
@@ -84,7 +84,7 @@ public class Attacker : MonoBehaviour
 
     private IEnumerator Hit(Player player)
     {
-        while (player.enabled && gameObject.TryGetComponent(out AnimationController animationController))
+        while (player.enabled && gameObject.TryGetComponent(out AnimationPlayer animationController))
         {
             animationController.SetAttackState(IsAttacked, true);
 

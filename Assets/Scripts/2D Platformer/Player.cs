@@ -3,13 +3,13 @@ using UnityEngine;
 [RequireComponent(typeof(Mover))]
 [RequireComponent(typeof(Jumper))]
 [RequireComponent(typeof(Attacker))]
-[RequireComponent(typeof(AnimationController))]
+[RequireComponent(typeof(AnimationPlayer))]
 public class Player : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
     private const string ScoreCounterTag = "ScoreCounter";
 
-    public DamageController DamageController { get; private set; }
+    public HealthIndicator DamageController { get; private set; }
 
     private readonly int VelocityX = Animator.StringToHash(nameof(VelocityX));
     private readonly int VelocityY = Animator.StringToHash(nameof(VelocityY));
@@ -19,17 +19,17 @@ public class Player : MonoBehaviour
     private Mover _mover;
     private Jumper _jumper;
     private Attacker _attacker;
-    private AnimationController _animationController;
+    private AnimationPlayer _animationController;
     private ScoreCounter _scoreCounter;
 
     private void Start()
     {
-        DamageController = GetComponent<DamageController>();
+        DamageController = GetComponent<HealthIndicator>();
         _mover = GetComponent<Mover>();
         _mover = GetComponent<Mover>();
         _jumper = GetComponent<Jumper>();
         _attacker = GetComponent<Attacker>();
-        _animationController = GetComponent<AnimationController>();
+        _animationController = GetComponent<AnimationPlayer>();
 
         if (GameObject.FindWithTag(ScoreCounterTag).TryGetComponent(out ScoreCounter scoreCounter))
             _scoreCounter = scoreCounter;

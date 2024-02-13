@@ -2,20 +2,20 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Mover))]
-[RequireComponent(typeof(AnimationController))]
+[RequireComponent(typeof(AnimationPlayer))]
 [RequireComponent(typeof(EnemyDetector))]
 public class Enemy : MonoBehaviour
 {
     private readonly int VelocityX = Animator.StringToHash(nameof(VelocityX));
 
-    public DamageController DamageController { get; private set; }
+    public HealthIndicator DamageController { get; private set; }
 
     private EnemyDetector _playerDetector;
     private Attacker _attacker;
     private WaitForSeconds _wait;
     private WaitForSecondsRealtime _stun;
     private Mover _mover;
-    private AnimationController _animationController;
+    private AnimationPlayer _animationController;
     private float _moveDirection = 1f;
     private float _waitingTime = 2f;
     private float _stunningTime = 0.4f;
@@ -24,10 +24,10 @@ public class Enemy : MonoBehaviour
     {
         _wait = new WaitForSeconds(_waitingTime);
         _stun = new WaitForSecondsRealtime(_stunningTime);
-        DamageController = GetComponent<DamageController>();
+        DamageController = GetComponent<HealthIndicator>();
         _attacker= GetComponent<Attacker>();
         _mover = GetComponent<Mover>();
-        _animationController = GetComponent<AnimationController>();
+        _animationController = GetComponent<AnimationPlayer>();
         _playerDetector = GetComponent<EnemyDetector>();
     }    
 
