@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
+
+    public event Action RotationChanged;
 
     private Rigidbody2D _rigidbody;
 
@@ -30,8 +33,10 @@ public class Mover : MonoBehaviour
     private void FlipToSight(float moveDirection)
     {
         if (moveDirection > 0)
-            transform.localRotation = Quaternion.Euler(0, 0, 0);
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         else if (moveDirection < 0)
-            transform.localRotation = Quaternion.Euler(0, 180, 0);
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+
+        RotationChanged?.Invoke();
     }
 }

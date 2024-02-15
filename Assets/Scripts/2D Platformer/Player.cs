@@ -1,34 +1,38 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(HealthLevelVisualization))]
 [RequireComponent(typeof(Mover))]
 [RequireComponent(typeof(Jumper))]
-[RequireComponent(typeof(Attacker))]
+[RequireComponent(typeof(AttackOnPressedKey))]
 [RequireComponent(typeof(AnimationPlayer))]
 public class Player : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
     private const string ScoreCounterTag = "ScoreCounter";
 
-    public HealthIndicator DamageController { get; private set; }
+    public HealthLevelVisualization HealthLevelVisualization { get; private set; }
 
     private readonly int VelocityX = Animator.StringToHash(nameof(VelocityX));
     private readonly int VelocityY = Animator.StringToHash(nameof(VelocityY));
     private readonly int IsGrounded = Animator.StringToHash(nameof(IsGrounded));
     private readonly int IsAttacked = Animator.StringToHash(nameof(IsAttacked));
 
+    private Health _health;
     private Mover _mover;
     private Jumper _jumper;
-    private Attacker _attacker;
+    private AttackOnPressedKey _attack;
     private AnimationPlayer _animationController;
     private ScoreCounter _scoreCounter;
 
     private void Start()
     {
-        DamageController = GetComponent<HealthIndicator>();
+        HealthLevelVisualization = GetComponent<HealthLevelVisualization>();
+        _health = GetComponent<Health>();
         _mover = GetComponent<Mover>();
         _mover = GetComponent<Mover>();
         _jumper = GetComponent<Jumper>();
-        _attacker = GetComponent<Attacker>();
+        _attack = GetComponent<AttackOnPressedKey>();
         _animationController = GetComponent<AnimationPlayer>();
 
         if (GameObject.FindWithTag(ScoreCounterTag).TryGetComponent(out ScoreCounter scoreCounter))
@@ -45,9 +49,9 @@ public class Player : MonoBehaviour
 
         if (collider.TryGetComponent(out Heart heart))
         {
-            if (DamageController.CurrentHealthValue < DamageController.MaxHealthValue)
+            if (_health.CurrentHealthValue < _health.MaxHealthValue)
             {
-                DamageController.Heal(heart.HealValue);
+                HealthLevelVisualization.Heal(heart.HealValue);
                 Destroy(heart.gameObject);
             }
         }
@@ -58,6 +62,6 @@ public class Player : MonoBehaviour
         _animationController.SetVelocityX(VelocityX, _mover.Move(Input.GetAxis(Horizontal)));
         _animationController.SetVelocityY(VelocityY, _jumper.Rigidbody.velocity.y);
         _animationController.SetGroundedState(IsGrounded, _jumper.Jump(Input.GetKeyDown(KeyCode.Space)));
-        _animationController.SetAttackState(IsAttacked, _attacker.IsAttack(Input.GetKeyDown(KeyCode.E)));
+        _animationController.SetAttackState(IsAttacked, _attack.IsHit());
     }    
 }

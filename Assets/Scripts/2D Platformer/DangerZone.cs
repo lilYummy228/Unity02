@@ -11,7 +11,7 @@ public class DangerZone : MonoBehaviour
         if (collision.TryGetComponent(out Player player))
         {
             _spawnPoint.SetPosition(collision.gameObject);
-            player.DamageController.TakeDamage(_damage);
+            player.HealthLevelVisualization.TakeDamage(_damage);
         }
     }
 }

@@ -1,7 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class HealthIndicator : Health
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(AnimationPlayer))]
+[RequireComponent(typeof(SpriteRenderer))]
+public class HealthLevelVisualization : MonoBehaviour
 {
     private readonly int IsHurt = Animator.StringToHash(nameof(IsHurt));
     private readonly int IsDead = Animator.StringToHash(nameof(IsDead));
@@ -9,6 +12,7 @@ public class HealthIndicator : Health
     [SerializeField] private Material _hurtBlinkMaterial;
     [SerializeField] private Material _healBlinkMaterial;
 
+    private Health _health;
     private AnimationPlayer _animationPlayer;
     private SpriteRenderer _spriteRenderer;
     private WaitForSeconds _wait;
@@ -18,39 +22,12 @@ public class HealthIndicator : Health
 
     private void Start()
     {
-        if (gameObject.TryGetComponent(out AnimationPlayer animationPlayer))
-            _animationPlayer = animationPlayer;
-
-        if (gameObject.TryGetComponent(out SpriteRenderer spriteRenderer))
-            _spriteRenderer = spriteRenderer;
+        _health= GetComponent<Health>();
+        _animationPlayer= GetComponent<AnimationPlayer>();
+        _spriteRenderer= GetComponent<SpriteRenderer>();
 
         _wait = new WaitForSeconds(_blinkTime);
-
         _defaultMaterial = _spriteRenderer.material;
-    }
-
-    public override void TakeDamage(int damage)
-    {      
-        StartCoroutine(HurtBlink());
-        base.TakeDamage(damage);
-
-        if (CurrentHealthValue <= 0)
-            Dead();
-    }
-
-    public override void Heal(int healValue)
-    {
-        StartCoroutine(Blink(_healBlinkMaterial));
-        base.Heal(healValue);
-    }
-
-    private IEnumerator Blink(Material material)
-    {
-        _spriteRenderer.material = material;        
-
-        yield return _wait;
-
-        _spriteRenderer.material = _defaultMaterial;        
     }
 
     private IEnumerator HurtBlink()
@@ -62,6 +39,32 @@ public class HealthIndicator : Health
         yield return _wait;
 
         _animationPlayer.SetHurtState(IsHurt, false);
+    }
+
+    private IEnumerator Blink(Material material)
+    {
+        _spriteRenderer.material = material;        
+
+        yield return _wait;
+
+        _spriteRenderer.material = _defaultMaterial;        
+    }
+
+    public void TakeDamage(int damage)
+    {      
+        _health.TakeDamage(damage);
+
+        StartCoroutine(HurtBlink());
+
+        if (_health.CurrentHealthValue <= 0)
+            Dead();
+    }
+
+    public void Heal(int healValue)
+    {
+        _health.Heal(healValue);
+
+        StartCoroutine(Blink(_healBlinkMaterial));
     }
 
     private void Dead()

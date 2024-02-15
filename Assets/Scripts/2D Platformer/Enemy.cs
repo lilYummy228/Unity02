@@ -1,17 +1,21 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Mover))]
 [RequireComponent(typeof(AnimationPlayer))]
 [RequireComponent(typeof(EnemyDetector))]
+[RequireComponent(typeof(AttackOnCollision))]
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(HealthLevelVisualization))]
 public class Enemy : MonoBehaviour
 {
     private readonly int VelocityX = Animator.StringToHash(nameof(VelocityX));
 
-    public HealthIndicator DamageController { get; private set; }
-
+    private HealthLevelVisualization _healthLevelVisualization;
+    private Health _health;
     private EnemyDetector _playerDetector;
-    private Attacker _attacker;
+    private AttackOnCollision _attack;
     private WaitForSeconds _wait;
     private WaitForSecondsRealtime _stun;
     private Mover _mover;
@@ -24,12 +28,14 @@ public class Enemy : MonoBehaviour
     {
         _wait = new WaitForSeconds(_waitingTime);
         _stun = new WaitForSecondsRealtime(_stunningTime);
-        DamageController = GetComponent<HealthIndicator>();
-        _attacker= GetComponent<Attacker>();
+
+        _health = GetComponent<Health>();
+        _healthLevelVisualization = GetComponent<HealthLevelVisualization>();
+        _attack = GetComponent<AttackOnCollision>();
         _mover = GetComponent<Mover>();
         _animationController = GetComponent<AnimationPlayer>();
         _playerDetector = GetComponent<EnemyDetector>();
-    }    
+    }
 
     private void Update()
     {
@@ -48,13 +54,13 @@ public class Enemy : MonoBehaviour
                 _moveDirection = -1;
         }
 
-        yield return null;        
-    }     
+        yield return null;
+    }
 
     public IEnumerator Stun()
     {
-        if (DetectPlayer() != null)
-            StopCoroutine(DetectPlayer());
+        if (_playerDetector.DetectorCoroutine != null)
+            StopCoroutine(_playerDetector.DetectorCoroutine);
 
         float moveDirection = _moveDirection;
         _moveDirection = 0;
@@ -72,5 +78,5 @@ public class Enemy : MonoBehaviour
         yield return _wait;
 
         _moveDirection = -moveDirection;
-    }    
+    }
 }

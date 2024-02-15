@@ -16,7 +16,7 @@ public class Health : MonoBehaviour
         MaxHealthValue = CurrentHealthValue;
     }
 
-    public virtual void Heal(int healValue)
+    public void Heal(int healValue)
     {
         CurrentHealthValue += healValue;
 
@@ -26,7 +26,7 @@ public class Health : MonoBehaviour
         CurrentHealthChanged?.Invoke();
     }
 
-    public virtual void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         CurrentHealthValue -= damage;
 

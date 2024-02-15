@@ -20,15 +20,15 @@ public class MusicVolumeController : MonoBehaviour
         _slider.value = Mathf.Pow(10f, _volumeValue / Multiplier);
     }
 
+    private void OnDisable()
+    {
+        PlayerPrefs.SetFloat(_volumeParameter, _volumeValue);
+    }
+
     public void HandleSliderValueChanger(float value)
     {
         _volumePercent.text = Mathf.Round(value * 100) + "%";
         _volumeValue = Mathf.Log10(value) * Multiplier;
         _mixer.SetFloat(_volumeParameter, _volumeValue);
-    }
-
-    private void OnDisable()
-    {
-        PlayerPrefs.SetFloat(_volumeParameter, _volumeValue);
     }
 }
