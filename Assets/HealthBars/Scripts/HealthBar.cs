@@ -14,12 +14,14 @@ public class HealthBar : MonoBehaviour
 
     private void OnEnable()
     {
-        Health.CurrentHealthChanged += ChangeValue;
+        Health.GetHealed += ChangeValue;
+        Health.GetHurt += ChangeValue;
     }
 
     private void OnDisable()
     {
-        Health.CurrentHealthChanged -= ChangeValue;
+        Health.GetHealed -= ChangeValue;
+        Health.GetHurt -= ChangeValue;
     }
 
     public virtual void ChangeValue() { }
