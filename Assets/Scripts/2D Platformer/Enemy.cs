@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     private float _waitingTime = 2f;
     private float _stunningTime = 0.4f;
 
+
     private void Start()
     {
         _health = GetComponent<Health>();

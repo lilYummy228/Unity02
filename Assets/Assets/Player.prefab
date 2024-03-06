@@ -67,6 +67,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3577314893920032625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &730135270538026837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 74641729521263660}
+  m_Layer: 0
+  m_Name: LifestealPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &74641729521263660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730135270538026837}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.78, z: 0}
+  m_LocalScale: {x: 0.6233268, y: 0.6233268, z: 0.6233268}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3741988885366984000}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &824690682238081353
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,6 +114,7 @@ GameObject:
   - component: {fileID: 3676478851353493689}
   - component: {fileID: 5208120405791492761}
   - component: {fileID: 2186202537922972546}
+  - component: {fileID: 1093820450998920890}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -245,6 +277,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthValue: 100
+--- !u!114 &1093820450998920890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824690682238081353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f0d4f9b59e7434ebbc2baeadcad892, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 0}
+  _lifestealPoint: {fileID: 74641729521263660}
+  _range: 3
+  _lifestealValue: 4
 --- !u!1 &2331256919547140347
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,6 +764,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6369578114056373497}
+  - {fileID: 74641729521263660}
   m_Father: {fileID: 3577314893920032625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8373068730810988611
@@ -815,7 +864,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9896d24f62a4b9f47a992b8f4d8b1b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameObject: {fileID: 824690682238081353}
   _hurtBlinkMaterial: {fileID: 2100000, guid: 57f383d93da31f24d89cb93095a22613, type: 2}
   _healBlinkMaterial: {fileID: 2100000, guid: 41d225f255dce9d498b3dd00a2a4e809, type: 2}
   _health: {fileID: 2186202537922972546}
@@ -844,7 +892,7 @@ Transform:
   m_GameObject: {fileID: 7541394169167324517}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8, y: 0.69000006, z: 4.147304}
+  m_LocalPosition: {x: 0.892, y: 0.69000006, z: 4.147304}
   m_LocalScale: {x: 0.6233268, y: 0.6233268, z: 0.6233268}
   m_ConstrainProportionsScale: 0
   m_Children: []

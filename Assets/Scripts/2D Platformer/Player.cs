@@ -16,22 +16,22 @@ public class Player : MonoBehaviour
 
     [SerializeField] private AnimationPlayer _animationPlayer;
 
-    private HealthLevelVisualization _healthLevelVisualization;
     private Mover _mover;
     private Jumper _jumper;
     private AttackOnPressedKey _attack;
     private ScoreCounter _scoreCounter;
+    private Lifesteal _lifesteal;
 
     public Health Health { get; private set; }
 
     private void Start()
     {
         Health = GetComponent<Health>();
-        _healthLevelVisualization = GetComponent<HealthLevelVisualization>();
         _mover = GetComponent<Mover>();
         _mover = GetComponent<Mover>();
         _jumper = GetComponent<Jumper>();
         _attack = GetComponent<AttackOnPressedKey>();
+        _lifesteal = GetComponent<Lifesteal>();
 
         if (GameObject.FindWithTag(ScoreCounterTag).TryGetComponent(out ScoreCounter scoreCounter))
             _scoreCounter = scoreCounter;
@@ -61,5 +61,6 @@ public class Player : MonoBehaviour
         _animationPlayer.SetVelocityY(VelocityY, _jumper.Rigidbody.velocity.y);
         _animationPlayer.SetGroundedStatus(IsGrounded, _jumper.Jump(Input.GetKeyDown(KeyCode.Space)));
         _animationPlayer.SetAttackStatus(IsAttacked, _attack.TryHit());
+        _lifesteal.TryStealHealth();
     }
 }
