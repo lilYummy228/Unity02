@@ -52,12 +52,13 @@ public class Vampirism : MonoBehaviour
                         enemy.Health.TakeDamage(healthValue);
                         _health.Heal(healthValue);
 
-                        yield return _wait;
                     }
                 }
             }
             else
                 break;
+
+            yield return _wait;
         }
 
         _coroutine = null;
