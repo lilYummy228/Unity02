@@ -1,17 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Mover))]
+[RequireComponent(typeof(Health), typeof(Mover), typeof(AttackOnCollision))]
 [RequireComponent(typeof(EnemyDetector))]
-[RequireComponent(typeof(AttackOnCollision))]
-[RequireComponent(typeof(Health))]
 public class Enemy : MonoBehaviour
 {
     private readonly int VelocityX = Animator.StringToHash(nameof(VelocityX));
 
     [SerializeField] private AnimationPlayer _animationPlayer;
 
-    private Health _health;
     private EnemyDetector _detector;
     private AttackOnCollision _attack;
     private WaitForSeconds _wait;
@@ -21,10 +18,11 @@ public class Enemy : MonoBehaviour
     private float _waitingTime = 2f;
     private float _stunningTime = 0.4f;
 
+    public Health Health { get; private set; }
 
     private void Start()
     {
-        _health = GetComponent<Health>();
+        Health = GetComponent<Health>();
         _attack = GetComponent<AttackOnCollision>();
         _mover = GetComponent<Mover>();
         _detector = GetComponent<EnemyDetector>();

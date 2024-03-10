@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(AnimationPlayer))]
-[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(AnimationPlayer), typeof(SpriteRenderer))]
 public class HealthLevelVisualization : MonoBehaviour
 {
     private readonly int IsHurt = Animator.StringToHash(nameof(IsHurt));

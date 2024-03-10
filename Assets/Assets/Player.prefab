@@ -77,7 +77,7 @@ GameObject:
   m_Component:
   - component: {fileID: 74641729521263660}
   m_Layer: 0
-  m_Name: LifestealPoint
+  m_Name: VampirismPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 3676478851353493689}
   - component: {fileID: 5208120405791492761}
   - component: {fileID: 2186202537922972546}
-  - component: {fileID: 1093820450998920890}
+  - component: {fileID: 2382662322917733284}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthValue: 100
---- !u!114 &1093820450998920890
+--- !u!114 &2382662322917733284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -286,13 +286,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 824690682238081353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67f0d4f9b59e7434ebbc2baeadcad892, type: 3}
+  m_Script: {fileID: 11500000, guid: 7bc1a701dafe3be49af2afb44de045f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 0}
-  _lifestealPoint: {fileID: 74641729521263660}
+  _point: {fileID: 74641729521263660}
   _range: 3
-  _lifestealValue: 4
+  _healthValue: 3
 --- !u!1 &2331256919547140347
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class AttackOnCollision : MonoBehaviour
 
     private Coroutine _hitCoroutine;
     private WaitForSeconds _stun;
-    private float _stunningTime = 0.4f;
+    private float _stunningTime = 0.8f;
 
     private void Start()
     {

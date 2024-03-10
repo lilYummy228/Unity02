@@ -1,8 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Health))]
-[RequireComponent(typeof(Mover))]
-[RequireComponent(typeof(Jumper))]
+[RequireComponent(typeof(Health), typeof(Mover), typeof(Jumper))]
 [RequireComponent(typeof(AttackOnPressedKey))]
 public class Player : MonoBehaviour
 {
@@ -20,7 +18,7 @@ public class Player : MonoBehaviour
     private Jumper _jumper;
     private AttackOnPressedKey _attack;
     private ScoreCounter _scoreCounter;
-    private Lifesteal _lifesteal;
+    private Vampirism _vampirism;
 
     public Health Health { get; private set; }
 
@@ -31,7 +29,7 @@ public class Player : MonoBehaviour
         _mover = GetComponent<Mover>();
         _jumper = GetComponent<Jumper>();
         _attack = GetComponent<AttackOnPressedKey>();
-        _lifesteal = GetComponent<Lifesteal>();
+        _vampirism = GetComponent<Vampirism>();
 
         if (GameObject.FindWithTag(ScoreCounterTag).TryGetComponent(out ScoreCounter scoreCounter))
             _scoreCounter = scoreCounter;
@@ -60,7 +58,7 @@ public class Player : MonoBehaviour
         _animationPlayer.SetVelocityX(VelocityX, _mover.Move(Input.GetAxis(Horizontal)));
         _animationPlayer.SetVelocityY(VelocityY, _jumper.Rigidbody.velocity.y);
         _animationPlayer.SetGroundedStatus(IsGrounded, _jumper.Jump(Input.GetKeyDown(KeyCode.Space)));
-        _animationPlayer.SetAttackStatus(IsAttacked, _attack.TryHit());
-        _lifesteal.TryStealHealth();
+        _animationPlayer.SetAttackStatus(IsAttacked, _attack.TryHit(Input.GetKeyDown(KeyCode.E)));
+        _vampirism.TryStealHealth(Input.GetKeyDown(KeyCode.F));
     }
 }

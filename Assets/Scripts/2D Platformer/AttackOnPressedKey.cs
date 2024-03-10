@@ -6,7 +6,7 @@ public class AttackOnPressedKey : MonoBehaviour
 
     [SerializeField] private Transform _attackPoint;
     [SerializeField] private float _attackRange = 1f;
-    [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private LayerMask _enemiesLayer;
     [SerializeField] private int _damage = 20;
 
     private float _attackRate = 0.5f;
@@ -20,16 +20,13 @@ public class AttackOnPressedKey : MonoBehaviour
         Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
     }
 
-    public bool TryHit()
+    public bool TryHit(bool pressedKey)
     {
-        if (Time.time >= _nextAttackTime)
+        if (Time.time >= _nextAttackTime && pressedKey)
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                Hit();
+            Hit();
 
-                return true;
-            }
+            return true;
         }
 
         return false;
@@ -37,7 +34,7 @@ public class AttackOnPressedKey : MonoBehaviour
 
     private void Hit()
     {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, _enemyLayer);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, _enemiesLayer);
 
         foreach (Collider2D collider in hitEnemies)
         {
