@@ -1,5 +1,4 @@
 using System.Collections;
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
@@ -7,13 +6,12 @@ public class Vampirism : MonoBehaviour
 {
     [SerializeField] private Transform _point;
     [SerializeField] private float _range = 6f;
-    [SerializeField] private int _healthValue = 3;
+    [SerializeField] private int _vampirismValue = 4;
     [SerializeField] private LayerMask _enemiesLayer;
 
     public Collider2D[] _colliders;
 
     private Health _health;
-    private Coroutine _coroutine;
     private float _recharge = 8f;
     private float _nextActionTime = 0f;
     private float _actionTime = 6f;
@@ -22,46 +20,40 @@ public class Vampirism : MonoBehaviour
     private void Start()
     {
         _health = GetComponent<Health>();
-        _wait = new WaitForSeconds(0.5f);
+        _wait = new WaitForSeconds(1f);
     }
 
     public void TryStealHealth(bool pressedKey)
     {
         _colliders = Physics2D.OverlapCircleAll(_point.position, _range, _enemiesLayer);
 
-        if (pressedKey && Time.time >= _nextActionTime && _coroutine == null && _colliders.Length > 0)
-            _coroutine = StartCoroutine(StealHealth());
+        if (pressedKey && Time.time >= _nextActionTime)
+            StartCoroutine(StealHealth());
     }
 
     private IEnumerator StealHealth()
     {
-        int healthValue = _healthValue;
+        int vampirismValue = _vampirismValue;
         _nextActionTime = Time.time + _recharge;
 
-        for (int i = 0; i < _actionTime * 2; i++)
+        for (int i = 0; i < _actionTime; i++)
         {
-            if (_colliders.Length > 0)
+            foreach (Collider2D collider in _colliders)
             {
-                foreach (Collider2D collider in _colliders)
+                if (collider.TryGetComponent(out Enemy enemy) && enemy.Health.CurrentHealthValue > 0)
                 {
-                    if (collider.TryGetComponent(out Enemy enemy) && enemy.Health.CurrentHealthValue > 0)
-                    {
-                        if (enemy.Health.CurrentHealthValue < _healthValue)
-                            healthValue = enemy.Health.CurrentHealthValue;
+                    if (enemy.Health.CurrentHealthValue < _vampirismValue)
+                        vampirismValue = enemy.Health.CurrentHealthValue;
 
-                        enemy.Health.TakeDamage(healthValue);
-                        _health.Heal(healthValue);
-
-                    }
+                    enemy.Health.TakeDamage(vampirismValue);
+                    _health.Heal(vampirismValue);
                 }
+
+                vampirismValue = _vampirismValue;
             }
-            else
-                break;
 
             yield return _wait;
         }
-
-        _coroutine = null;
     }
 
     private void OnDrawGizmosSelected()

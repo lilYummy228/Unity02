@@ -50,8 +50,8 @@ public class Health : MonoBehaviour
         else if (gameObject.TryGetComponent(out Player player))
             player.enabled = false;
 
-        gameObject.GetComponent<Collider2D>().enabled = false;
         Destroy(gameObject.GetComponent<Rigidbody2D>());
+        gameObject.GetComponent<Collider2D>().enabled = false;
 
         Invoke(nameof(ClearDeadBody), _clearTime);
 
