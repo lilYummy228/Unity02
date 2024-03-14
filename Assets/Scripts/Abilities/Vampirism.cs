@@ -9,8 +9,7 @@ public class Vampirism : MonoBehaviour
     [SerializeField] private int _vampirismValue = 4;
     [SerializeField] private LayerMask _enemiesLayer;
 
-    public Collider2D[] _colliders;
-
+    private Collider2D[] _colliders;
     private Health _health;
     private float _recharge = 8f;
     private float _nextActionTime = 0f;
@@ -25,8 +24,6 @@ public class Vampirism : MonoBehaviour
 
     public void TryStealHealth(bool pressedKey)
     {
-        _colliders = Physics2D.OverlapCircleAll(_point.position, _range, _enemiesLayer);
-
         if (pressedKey && Time.time >= _nextActionTime)
             StartCoroutine(StealHealth());
     }
@@ -38,6 +35,8 @@ public class Vampirism : MonoBehaviour
 
         for (int i = 0; i < _actionTime; i++)
         {
+            _colliders = Physics2D.OverlapCircleAll(_point.position, _range, _enemiesLayer);
+
             foreach (Collider2D collider in _colliders)
             {
                 if (collider.TryGetComponent(out Enemy enemy) && enemy.Health.CurrentHealthValue > 0)
